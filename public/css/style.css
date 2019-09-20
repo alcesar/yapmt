@@ -1,0 +1,37 @@
+#main {
+  margin-top: 50px;
+}
+.bootstrap-select {
+  width: 220px \0; /*IE9 and below*/
+
+  // The selectpicker button
+  > .dropdown-toggle {
+    width: 100%;
+    padding-right: 25px;
+    z-index: 1;
+
+    &.bs-placeholder,
+    &.bs-placeholder:hover,
+    &.bs-placeholder:focus,
+    &.bs-placeholder:active { color: $input-color-placeholder; }
+  }
+
+  > select {
+    position: absolute !important;
+    bottom: 0;
+    left: 50%;
+    display: block !important;
+    width: 0.5px !important;
+    height: 100% !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    border: none;
+
+    &.mobile-device {
+      top: 0;
+      left: 0;
+      display: block !important;
+      width: 100% !important;
+      z-index: 2;
+    }
+  }

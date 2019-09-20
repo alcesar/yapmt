@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>YAPMT APP</title>
+
+		<link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css', rel='stylesheet')>
+		<link href="../css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<!-- Modal -->
+			<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="modalLabel">Excluir projeto</h4>
+						</div>
+						<div class="modal-body">
+							Deseja realmente excluir este projeto?
+							<input type="text" name="hiddenId" value="" class="hidden"/>
+						</div>
+						<div class="modal-footer">
+							<a type="button" class="btn btn-primary" 
+							href="/projects/delete/"
+							onclick="location.href=this.href+$('#delete-modal').data('bs.modal').options.projId;return false;">Sim</a>
+							<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- /.modal -->	
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+						data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">YAPMT NodeJS e MongoDB</a>
+				</div>
+			</div>
+		</nav><br/><br/>
+		<div id="main" class="container-fluid">
+			<div id="top" class="row">
+				<div class="col-md-10">
+					<h2><%= title %></h2>
+				</div>
+				<div class="col-md-2">
+					<a id="create-project" href="/projects/new" class="btn btn-primary pull-right h2">Novo Projeto</a>
+				</div>
+			</div>
+			<hr />
+			<div id="list" class="row">
+				<div class="table-responsive col-md-12">
+			        <table class="table table-striped" cellspacing="0" cellpadding="0">
+			            <thead>
+			                <tr>
+								<th>Nome</th>
+								<th>Tarefas</th>
+			                    <th class="actions">Ações</th>
+			                 </tr>
+			            </thead>
+			            <tbody>
+							<% projects.forEach(function(proj) { %>
+				                <tr>
+									<td><%=proj.name%></td>
+									<td><%=proj.tasks ? proj.tasks.length : 0%></td>
+				                    <td class="actions">
+				                        <a class="btn btn-success btn-xs glyphicon glyphicon-zoom-in" href="/projects/show/<%=proj._id%>"></a>
+				                        <a class="btn btn-warning btn-xs glyphicon glyphicon-pencil" href="/projects/edit/<%=proj._id%>"></a>
+				                        <a class="btn btn-danger btn-xs glyphicon glyphicon-trash" 
+				                        	href="#" data-toggle="modal" data-target="#delete-modal" data-proj-id="<%=proj._id%>"></a>
+				                    </td>
+				                </tr>							
+							<% }); %>			            	 
+			            </tbody>
+			         </table>			 
+			     </div>
+			</div>			
+		</div>			 
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			$('#delete-modal').on('show.bs.modal', function(e) {
+			    //get data-id attribute of the clicked element
+			    var projId = $(e.relatedTarget).data('proj-id');
+			    //populate the textbox
+			    $(e.currentTarget).find('delete').val(projId);
+			});			
+		</script>
+	</body>
+</html>
